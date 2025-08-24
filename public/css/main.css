@@ -1,0 +1,28 @@
+*{
+    margin:0;
+}
+
+h1{
+    text-align:center;
+    color:black;
+}
+
+.container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+}
+
+.box{
+    border:2px solid black;
+    width:30vw;
+    margin:10px;
+    padding:15px;
+    border-radius:20px;
+    background-color:#FFF9C4;
+}
+
+.btns{
+    display:flex;
+}

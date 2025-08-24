@@ -1,0 +1,23 @@
+body{
+    background-color:#F8F8F8;
+    /* background-color:#C4C9F9; */
+    color:#8F664A;
+}
+
+.navbar{
+    background-color: #bab3b3;
+    height:3.4rem;
+    display:flex;
+    justify-content: space-between;
+}
+
+.left{
+    display:flex;
+    align-items: center;
+}
+
+.right{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

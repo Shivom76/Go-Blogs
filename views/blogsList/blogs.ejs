@@ -11,17 +11,19 @@
             <div class="box">
                 <h3>username: @<%=data.username%></h3>
                 <p>content: <%=data.content%></p>
-                <div class="btns">
-                    <form method="get" action="/blogs/edit/<%=data._id%>">
-                        <button class="btn btn-dark">Edit</button>
-                    </form>
-                    &nbsp;&nbsp;
-                    <form method="post" action="/blogs/delete/<%=data._id%>">
-                        <input type="hidden" name="_method" value="delete">
-                        <button class="btn btn-dark">Delete</button>
-                    </form>
-                </div>
-               
+
+                <%if(currUser && data.username===currUser.username){%>
+                    <div class="btns">
+                        <form method="get" action="/blogs/edit/<%=data._id%>">
+                            <button class="btn btn-dark">Edit</button>
+                        </form>
+                        &nbsp;&nbsp;
+                        <form method="post" action="/blogs/delete/<%=data._id%>">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="btn btn-dark">Delete</button>
+                        </form>
+                    </div>
+                <%}%>
             </div>
         <%}%>   
     </div>

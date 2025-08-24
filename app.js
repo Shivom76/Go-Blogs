@@ -10,6 +10,9 @@ const session=require("express-session")
 const passport=require("passport")
 const LocalStrategy=require("passport-local")
 const User=require("./models/User")
+const flash=require("connect-flash")
+
+const {saveRedirectUrl}=require("./middleware.js")
 
 
 // process.env.SECRET
@@ -23,6 +26,7 @@ sessionOptions={
 }
 
 app.use(session(sessionOptions))
+app.use(flash())
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -30,9 +34,17 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+
+app.use((req,res,next)=>{
+    res.locals.currUser=req.user;
+    res.locals.success=req.flash("success")
+    res.locals.error=req.flash("error")
+    next();
+})
+
+
 app.set("view engine","ejs")
 app.engine("ejs",ejsMate)
-// app.set("views",path.join(__dirname,"/views/blogsList"));
 
 app.set("views",[
     path.join(__dirname,"/views/blogsList"),
@@ -62,6 +74,7 @@ app.listen(8080,()=>{
     console.log("8080 port is listening")
 })
 
+
 app.get("/",(req,res)=>{
     res.send("hello guyss")
 })
@@ -72,7 +85,13 @@ app.get("/blogs",async (req,res)=>{
 })
 
 app.get("/blogs/new",(req,res)=>{
-    res.render("new.ejs")
+    if(req.user){
+        let username=req.user.username
+        res.render("new.ejs",{username})
+    }else{
+        req.flash("error","You must be Signed In")
+        res.redirect("/login")
+    }
 })
 
 app.post("/blogs/new",async(req,res)=>{
@@ -105,8 +124,21 @@ app.post("/blogs/delete/:id",async(req,res)=>{
     res.redirect("/blogs")
 })
 
+
+
+
+
+//User routes
+
 app.get("/login",(req,res)=>{
     res.render("login.ejs")
+})
+
+app.post("/login",saveRedirectUrl,
+    passport.authenticate("local",{failureRedirect:"/login"}),
+    (req,res)=>{
+        req.flash("success","Welcome User")
+        res.redirect("/blogs")
 })
 
 app.get("/signup",(req,res)=>{
@@ -118,6 +150,22 @@ app.post("/signup",async (req,res)=>{
     let newUser=new User({email,username})
 
     let registeredUser=await User.register(newUser,password);
+    req.login(registeredUser,(err)=>{
+        if(err){
+            return next(err)
+        }
+        req.flash("success", "Welcome! You are now logged in.");
+            res.redirect("/blogs");
+    })
+
     console.log(registeredUser)
-    res.redirect("/blogs")
+})
+
+app.get("/logout",(req,res)=>{
+    req.logout((err)=>{
+        if(err){
+            console.log(err)
+        }
+        res.redirect("/blogs")
+    })
 })
