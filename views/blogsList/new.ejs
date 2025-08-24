@@ -1,0 +1,27 @@
+<% layout("/boilerplate.ejs") %>
+
+<head>
+    <link rel="stylesheet" href="/css/new.css">
+    <style>
+        #hidden{
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h2>Post your new Blog from here</h2>
+    <div class="form">
+        <form method="POST">
+            <div class="inputData">
+                <label for="username">Username</label>
+                <input type="text" placeholder="username" name="blog[username]" id="username">
+            </div>
+            <div class="inputData">
+                <label for="content">Content</label>
+                <input type="text" placeholder="content" name="blog[content]" id="content">
+            </div>
+            <br/>
+            <button class="btn btn-dark post">Post</button>
+        </form>
+    </div>
+</body>

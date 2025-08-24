@@ -1,0 +1,19 @@
+<% layout("/boilerplate.ejs") %>
+
+<head>
+    <link rel="stylesheet" href="/css/new.css">
+</head>
+<body>
+    <h2>Edit your page from here</h2>
+    <div class="form box container">
+        <form method="POST" action="/blogs/edit/<%=id%>">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="inputData">
+                <label for="content">Content:</label>
+                <input name="blog[content]" id="content" placeholder="content">
+            </div>            
+            <br/>
+            <button class="btn btn-dark">Edit</button>
+        </form>
+    </div>
+</body>

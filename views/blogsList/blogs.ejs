@@ -1,0 +1,148 @@
+<% layout("/boilerplate.ejs") %>
+
+<head>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <h1>All Blogs displayed here</h1>
+    <div class="container">
+
+        <%for (let data of Listing){%>
+            <div class="box">
+                <h3>username: @<%=data.username%></h3>
+                <p>content: <%=data.content%></p>
+                <div class="btns">
+                    <form method="get" action="/blogs/edit/<%=data._id%>">
+                        <button class="btn btn-dark">Edit</button>
+                    </form>
+                    &nbsp;&nbsp;
+                    <form method="post" action="/blogs/delete/<%=data._id%>">
+                        <input type="hidden" name="_method" value="delete">
+                        <button class="btn btn-dark">Delete</button>
+                    </form>
+                </div>
+               
+            </div>
+        <%}%>   
+    </div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div>
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div>
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div>
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div>
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div>
+<div class="box">
+    <div class="head">
+        username: nameee
+    </div>
+    This is a blog
+    
+    <form action="/blogs/edit/:id">
+        <button>Edit</button>
+    </form>
+    
+    <form action="/blogs/edit/:id">
+        <button>Delete</button>
+    </form>
+    
+</div> -->
