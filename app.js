@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+  }
+
 const express=require("express")
 const app=express()
 const path=require("path")
@@ -58,17 +62,19 @@ app.use(express.json())
 app.set(methodOverride("_method"))
 
 
-const MONGO_URL="mongodb://127.0.0.1:27017/Blogs"
+// const MONGO_URL="mongodb://127.0.0.1:27017/Blogs"
+const MONGO_URL=process.env.ATLAS_URL
 
 async function main(){
-    mongoose.connect(MONGO_URL)
-}
+    try{
+        await mongoose.connect(MONGO_URL)
+        console.log("mongoDB-ATLAS is connected")
+    }catch(err){
+        console.log(err)
+    }
 
-main().then(()=>{
-    console.log("mongoDB is connected")
-}).catch((err)=>{
-    console.log(err)
-})
+}
+main()
 
 app.listen(8080,()=>{
     console.log("8080 port is listening")
