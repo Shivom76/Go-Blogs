@@ -13,6 +13,7 @@ const BlogsSchema=new Schema({
     // time:Date.now()
 })
 
+
 const Blog=mongoose.model("Blog",BlogsSchema);
 
 module.exports=Blog;

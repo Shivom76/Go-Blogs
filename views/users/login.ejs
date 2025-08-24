@@ -1,0 +1,28 @@
+<% layout("/boilerplate.ejs") %>
+
+<head>
+    <style>
+        h2{
+            text-align: center;
+        }
+
+        .container{
+            border:2px solid black;
+            border-radius: 20px;
+            width:30vw;
+        }
+    </style>
+</head>
+
+<h2>Login</h2>
+<form action="/login" method="POST" class="container col-sm-2 col-form-label">
+    <div class="form-label">
+        <label for="username" class="form-label">Username</label>
+        <input id="username" type="text" class="form-label" name="username">
+    </div>
+    <div class="form-label">
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" class="form-label" name="password">
+    </div>
+    <button class="btn btn-dark">Login</button>
+</form>

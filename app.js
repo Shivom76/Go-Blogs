@@ -8,7 +8,8 @@ const Blog=require("./models/Blog")
 const session=require("express-session")
 // import mongo-store afterwards--------------for online storage
 const passport=require("passport")
-
+const LocalStrategy=require("passport-local")
+const User=require("./models/User")
 
 
 // process.env.SECRET
@@ -23,13 +24,20 @@ sessionOptions={
 
 app.use(session(sessionOptions))
 
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 app.set("view engine","ejs")
 app.engine("ejs",ejsMate)
 // app.set("views",path.join(__dirname,"/views/blogsList"));
 
 app.set("views",[
     path.join(__dirname,"/views/blogsList"),
-    path.join(__dirname,"/views/layouts")
+    path.join(__dirname,"/views/layouts"),
+    path.join(__dirname,"/views/users")
 ])
 
 app.use(express.static(path.join(__dirname,"/public")))
@@ -94,5 +102,22 @@ app.post("/blogs/delete/:id",async(req,res)=>{
     let {id}=req.params;
     let deleteBlog=await Blog.findByIdAndDelete(id)
     console.log(deleteBlog)
+    res.redirect("/blogs")
+})
+
+app.get("/login",(req,res)=>{
+    res.render("login.ejs")
+})
+
+app.get("/signup",(req,res)=>{
+    res.render("signup.ejs")
+})
+
+app.post("/signup",async (req,res)=>{
+    let {email,username,password}=req.body;
+    let newUser=new User({email,username})
+
+    let registeredUser=await User.register(newUser,password);
+    console.log(registeredUser)
     res.redirect("/blogs")
 })
